@@ -1,0 +1,169 @@
+@model Ahmetflix.Models.Series
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="series-detail-hero" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('@Model.BackdropPath');">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="@Model.PosterPath" alt="@Model.Title" class="img-fluid rounded series-poster">
+            </div>
+            <div class="col-md-8">
+                <h1 class="display-4 text-white">@Model.Title</h1>
+                <div class="series-meta">
+                    <span class="text-white me-3"><i class="fas fa-star text-warning"></i> @Model.VoteAverage</span>
+                    <span class="text-white me-3"><i class="fas fa-calendar"></i> @Model.FirstAirDate.Year</span>
+                    <span class="text-white me-3"><i class="fas fa-clock"></i> @Model.EpisodeRunTime dakika</span>
+                    <span class="text-white me-3"><i class="fas fa-tv"></i> @Model.NumberOfSeasons Sezon</span>
+                </div>
+                <p class="lead text-white mt-3">@Model.Overview</p>
+                <div class="mt-4">
+                    <a href="#" class="btn btn-primary btn-lg me-2"><i class="fas fa-play"></i> İzle</a>
+                    <a href="#" class="btn btn-outline-light btn-lg"><i class="fas fa-plus"></i> Listeme Ekle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="text-white mb-4">Dizi Hakkında</h3>
+            <p class="text-white">@Model.Overview</p>
+            
+            <h3 class="text-white mb-4 mt-5">Sezonlar</h3>
+            <div class="seasons-container">
+                @foreach (var season in Model.Seasons)
+                {
+                    <div class="season-card">
+                        <img src="@season.PosterPath" alt="@season.Name" class="season-poster">
+                        <div class="season-info">
+                            <h5 class="text-white">@season.Name</h5>
+                            <p class="text-muted">@season.EpisodeCount Bölüm</p>
+                            <p class="text-white small">@season.Overview</p>
+                            <a href="#" class="btn btn-primary btn-sm">Bölümleri Gör</a>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+            <h3 class="text-white mb-4 mt-5">Oyuncular</h3>
+            <div class="row">
+                @foreach (var cast in Model.Casts)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="cast-card">
+                            <img src="@cast.ProfilePath" alt="@cast.Name" class="img-fluid rounded">
+                            <div class="cast-info">
+                                <h6 class="text-white mb-0">@cast.Name</h6>
+                                <small class="text-muted">@cast.Character</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="series-info-card">
+                <h4 class="text-white mb-4">Dizi Bilgileri</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <span class="text-muted">Durum:</span>
+                        <span class="text-white">@Model.Status</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Tür:</span>
+                        <span class="text-white">@string.Join(", ", Model.Genres)</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Dil:</span>
+                        <span class="text-white">@Model.OriginalLanguage</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Yapım Yılı:</span>
+                        <span class="text-white">@Model.FirstAirDate.Year</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Son Yayın:</span>
+                        <span class="text-white">@Model.LastAirDate.ToString("dd.MM.yyyy")</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Bölüm Süresi:</span>
+                        <span class="text-white">@Model.EpisodeRunTime dakika</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .series-detail-hero {
+        padding: 4rem 0;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .series-poster {
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .cast-card {
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s;
+    }
+
+    .cast-card:hover {
+        transform: scale(1.05);
+    }
+
+    .cast-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .cast-info {
+        padding: 1rem;
+    }
+
+    .series-info-card {
+        background-color: #1a1a1a;
+        padding: 2rem;
+        border-radius: 8px;
+    }
+
+    .seasons-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .season-card {
+        display: flex;
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s;
+    }
+
+    .season-card:hover {
+        transform: scale(1.02);
+    }
+
+    .season-poster {
+        width: 150px;
+        height: 225px;
+        object-fit: cover;
+    }
+
+    .season-info {
+        padding: 1.5rem;
+        flex: 1;
+    }
+</style> 

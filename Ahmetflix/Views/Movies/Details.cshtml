@@ -1,0 +1,119 @@
+@model Ahmetflix.Models.Movie
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="movie-detail-hero" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('@Model.BackdropPath');">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="@Model.PosterPath" alt="@Model.Title" class="img-fluid rounded movie-poster">
+            </div>
+            <div class="col-md-8">
+                <h1 class="display-4 text-white">@Model.Title</h1>
+                <div class="movie-meta">
+                    <span class="text-white me-3"><i class="fas fa-star text-warning"></i> @Model.VoteAverage</span>
+                    <span class="text-white me-3"><i class="fas fa-calendar"></i> @Model.ReleaseDate.Year</span>
+                    <span class="text-white me-3"><i class="fas fa-clock"></i> @Model.Runtime dakika</span>
+                </div>
+                <p class="lead text-white mt-3">@Model.Overview</p>
+                <div class="mt-4">
+                    <a href="#" class="btn btn-primary btn-lg me-2"><i class="fas fa-play"></i> İzle</a>
+                    <a href="#" class="btn btn-outline-light btn-lg"><i class="fas fa-plus"></i> Listeme Ekle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="text-white mb-4">Film Hakkında</h3>
+            <p class="text-white">@Model.Overview</p>
+            
+            <h3 class="text-white mb-4 mt-5">Oyuncular</h3>
+            <div class="row">
+                @foreach (var cast in Model.Casts)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="cast-card">
+                            <img src="@cast.ProfilePath" alt="@cast.Name" class="img-fluid rounded">
+                            <div class="cast-info">
+                                <h6 class="text-white mb-0">@cast.Name</h6>
+                                <small class="text-muted">@cast.Character</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="movie-info-card">
+                <h4 class="text-white mb-4">Film Bilgileri</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <span class="text-muted">Yönetmen:</span>
+                        <span class="text-white">@Model.Director</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Tür:</span>
+                        <span class="text-white">@string.Join(", ", Model.Genres)</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Dil:</span>
+                        <span class="text-white">@Model.OriginalLanguage</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Bütçe:</span>
+                        <span class="text-white">$@Model.Budget.ToString("N0")</span>
+                    </li>
+                    <li class="mb-3">
+                        <span class="text-muted">Gelir:</span>
+                        <span class="text-white">$@Model.Revenue.ToString("N0")</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .movie-detail-hero {
+        padding: 4rem 0;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .movie-poster {
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .cast-card {
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s;
+    }
+
+    .cast-card:hover {
+        transform: scale(1.05);
+    }
+
+    .cast-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .cast-info {
+        padding: 1rem;
+    }
+
+    .movie-info-card {
+        background-color: #1a1a1a;
+        padding: 2rem;
+        border-radius: 8px;
+    }
+</style> 

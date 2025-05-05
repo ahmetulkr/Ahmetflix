@@ -1,5 +1,36 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model IEnumerable<Ahmetflix.Models.Series>
+
 @{
+    ViewData["Title"] = "Diziler";
 }
+
+<div class="container mt-5">
+    <h1 class="text-white mb-4">Diziler</h1>
+    
+    <div class="row">
+        @foreach (var series in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="movie-card">
+                    <img src="@series.PosterPath" alt="@series.Title" class="img-fluid">
+                    <div class="card-body">
+                        <h5 class="card-title">@series.Title</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-warning">
+                                <i class="fas fa-star"></i> @series.VoteAverage.ToString("0.0")
+                            </span>
+                            <span class="text-muted">
+                                <i class="fas fa-tv"></i> @series.NumberOfSeasons Sezon
+                            </span>
+                        </div>
+                        <p class="card-text small mt-2">@(series.Overview.Length > 100 ? series.Overview.Substring(0, 100) + "..." : series.Overview)</p>
+                        <a asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary btn-sm w-100">Detaylar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
